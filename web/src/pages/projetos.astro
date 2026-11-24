@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+const ratios = ['4 / 5', '3 / 2', '1 / 1', '3 / 2', '4 / 5', '16 / 9'];
+---
+<BaseLayout title="Projetos" description="Ensaios e séries fotográficas de Victor Hugo Camará.">
+  <PageIntro title="Projetos" lead="Ensaios e séries documentais. Os itens abaixo são exemplos." />
+  <div class="wrap">
+    <div class="grid-cards">
+      {ratios.map((r, i) => <ProjectCard title={`Projeto de exemplo ${i + 1}`} summary="Resumo de exemplo." ratio={r} />)}
+    </div>
+  </div>
+</BaseLayout>

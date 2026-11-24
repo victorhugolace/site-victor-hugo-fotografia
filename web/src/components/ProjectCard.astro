@@ -1,0 +1,14 @@
+---
+import Placeholder from './Placeholder.astro';
+interface Props { title: string; summary: string; ratio?: string }
+const { title, summary, ratio = '4 / 5' } = Astro.props;
+---
+<article>
+  <Placeholder ratio={ratio} label={`Capa de exemplo: ${title}`} />
+  <h3>{title}</h3>
+  <p class="muted">{summary}</p>
+</article>
+<style>
+  h3 { font-size: var(--text-lg); margin: var(--space-2) 0 0.25rem; }
+  p { font-size: var(--text-sm); }
+</style>

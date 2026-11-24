@@ -1,0 +1,9 @@
+---
+interface Props { title: string; lead?: string }
+const { title, lead } = Astro.props;
+---
+<div class="wrap section intro">
+  <h1>{title}</h1>
+  {lead && <p class="muted">{lead}</p>}
+</div>
+<style>.intro { padding-bottom: var(--space-4); }</style>

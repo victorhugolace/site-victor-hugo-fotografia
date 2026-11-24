@@ -1,0 +1,29 @@
+:root {
+  /* Cores */
+  --color-bg: #f7f6f3;
+  --color-text: #151514;
+  --color-muted: #5a5a56;
+  --color-line: #d8d6cf;
+  --color-placeholder: #e6e4de;
+  --color-dark: #0c0c0c;
+  --color-on-dark: #ecebe7;
+
+  /* Tipografia */
+  --font-serif: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --text-display: clamp(2.5rem, 1.5rem + 5vw, 5.5rem);
+
+  /* Espaçamento e larguras */
+  --gutter: clamp(1.25rem, 5vw, 3.5rem);
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 3rem;
+  --space-5: clamp(4rem, 8vw, 8rem);
+  --content-width: 76rem;
+  --text-width: 38rem;
+}

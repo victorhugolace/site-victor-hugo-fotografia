@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE } from '../config/site';
+const examples = [
+  { title: 'Projeto de exemplo A', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
+  { title: 'Projeto de exemplo B', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
+  { title: 'Projeto de exemplo C', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
+];
+---
+<BaseLayout>
+  <section class="wrap hero">
+    <h1>{SITE.name}</h1>
+    <p class="lead">{SITE.tagline || 'Frase de posicionamento de exemplo, editável no painel.'}</p>
+    <Placeholder ratio="16 / 9" label="Fotografia de destaque de exemplo" />
+  </section>
+
+  <section class="wrap section" aria-labelledby="projetos">
+    <h2 id="projetos">Projetos selecionados</h2>
+    <div class="grid-cards">
+      {examples.map((p) => <a class="card" href="/projetos"><ProjectCard {...p} /></a>)}
+    </div>
+    <p><a href="/projetos">Ver todos os projetos</a></p>
+  </section>
+
+  <section class="wrap section split">
+    <div>
+      <h2>Fotografias Fine Art</h2>
+      <p class="muted">Obras autorais selecionadas, disponíveis para aquisição sob consulta.</p>
+      <a class="button" href="/fotografias">Ver fotografias</a>
+    </div>
+    <div>
+      <h2>Trabalhos profissionais</h2>
+      <p class="muted">Fotografia corporativa, institucional, de alimentos e projetos sob encomenda.</p>
+      <a class="button" href="/trabalhos">Conhecer os serviços</a>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="sobre">
+    <h2 id="sobre">Sobre o fotógrafo</h2>
+    <p class="muted">Texto de apresentação de exemplo. A biografia real será escrita no painel.</p>
+    <p><a href="/sobre">Ler mais</a></p>
+  </section>
+
+  <section class="wrap section" aria-labelledby="contato">
+    <h2 id="contato">Exposições, parcerias e aquisição de obras</h2>
+    <a class="button" href="/contato">Entrar em contato</a>
+  </section>
+</BaseLayout>
+<style>
+  .hero { padding-block: var(--space-3) var(--space-5); }
+  .hero h1 { font-size: var(--text-display); line-height: 1; margin-bottom: var(--space-2); }
+  .lead { font-family: var(--font-serif); font-size: var(--text-lg); margin-bottom: var(--space-4); }
+  .card { text-decoration: none; }
+  .split { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+</style>

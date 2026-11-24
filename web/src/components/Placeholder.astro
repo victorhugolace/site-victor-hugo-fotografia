@@ -1,0 +1,10 @@
+---
+// Marcador de imagem da Fase 2. Será substituído pelo componente de imagem do Sanity.
+interface Props { ratio?: string; label?: string }
+const { ratio = '3 / 2', label = 'Fotografia de exemplo' } = Astro.props;
+---
+<figure style={`aspect-ratio:${ratio}`} role="img" aria-label={label}><span>EXEMPLO</span></figure>
+<style>
+  figure { margin: 0; width: 100%; background: var(--color-placeholder); display: grid; place-items: end start; padding: var(--space-2); }
+  span { font-size: var(--text-sm); color: var(--color-muted); }
+</style>

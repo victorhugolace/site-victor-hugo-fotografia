@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Placeholder from '../components/Placeholder.astro';
+---
+<BaseLayout title="Fotografias Fine Art" description="Impressões Fine Art de Victor Hugo Camará, disponíveis sob consulta.">
+  <PageIntro title="Fotografias" lead="Obras autorais selecionadas para aquisição. A disponibilidade de cada obra é definida individualmente. Os itens abaixo são exemplos." />
+  <div class="wrap">
+    <div class="grid-cards">
+      {[1, 2, 3].map((n) => (
+        <article>
+          <Placeholder ratio="4 / 5" label={`Obra de exemplo ${n}`} />
+          <h2>Obra de exemplo {n}</h2>
+          <p class="muted">Consultar valores</p>
+        </article>
+      ))}
+    </div>
+    <p class="muted note">A aquisição de uma impressão física não transfere os direitos autorais da fotografia.</p>
+  </div>
+</BaseLayout>
+<style>
+  article h2 { font-size: var(--text-base); margin: var(--space-2) 0 0.25rem; }
+  .note { margin-top: var(--space-4); font-size: var(--text-sm); }
+</style>

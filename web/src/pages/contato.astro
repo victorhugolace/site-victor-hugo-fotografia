@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { SITE } from '../config/site';
+import { hasEmail, hasWhatsapp, mailtoLink, whatsappLink } from '../lib/contact';
+const subjects = ['Aquisição de fotografias', 'Orçamento profissional', 'Licenciamento e uso editorial', 'Exposição e parcerias', 'Projeto documental', 'Contato geral'];
+---
+<BaseLayout title="Contato" description="Contato para exposições, licenciamento, aquisição de obras e orçamentos.">
+  <PageIntro title="Contato" lead="Escolha o canal de sua preferência. Para propostas formais, o e-mail é o caminho recomendado." />
+  <div class="wrap channels">
+    {hasEmail() && (
+      <section>
+        <h2>E-mail</h2>
+        <p><a href={mailtoLink('Contato pelo site')}>{SITE.contactEmail}</a></p>
+      </section>
+    )}
+    {hasWhatsapp() && (
+      <section>
+        <h2>WhatsApp</h2>
+        <p><a class="button" href={whatsappLink('Olá, Victor! Vim pelo seu site.')}>Conversar pelo WhatsApp</a></p>
+      </section>
+    )}
+    {!hasEmail() && !hasWhatsapp() && (
+      <p class="muted" role="status">Os canais de contato ainda não foram configurados. Eles aparecerão aqui assim que forem cadastrados no painel.</p>
+    )}
+  </div>
+  <div class="wrap">
+    <h2>Assuntos</h2>
+    <p class="muted">O formulário com assunto e mensagem será implementado na Fase 4. Assuntos previstos:</p>
+    <ul>{subjects.map((s) => <li>{s}</li>)}</ul>
+  </div>
+</BaseLayout>
+<style>
+  .channels { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-bottom: var(--space-4); }
+  ul { padding-left: 1.2rem; }
+</style>
