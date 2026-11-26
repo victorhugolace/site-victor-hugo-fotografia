@@ -1,57 +1,117 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import { SITE } from '../config/site';
-const examples = [
-  { title: 'Projeto de exemplo A', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
-  { title: 'Projeto de exemplo B', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
-  { title: 'Projeto de exemplo C', summary: 'Resumo de exemplo. Será substituído pelo conteúdo real.' },
+import { SITE, AREAS, ABOUT } from '../config/site';
+const mosaic = [
+  { span: 'a', ratio: '3 / 2', tone: 1 }, { span: 'b', ratio: '4 / 5', tone: 3 },
+  { span: 'c', ratio: '4 / 5', tone: 0 }, { span: 'c', ratio: '1 / 1', tone: 4 }, { span: 'c', ratio: '4 / 5', tone: 2 },
+  { span: 'b', ratio: '1 / 1', tone: 5 }, { span: 'a', ratio: '16 / 10', tone: 1 },
+];
+const strip = ['3 / 2', '4 / 5', '3 / 2', '1 / 1', '4 / 5', '16 / 9', '3 / 2', '4 / 5'];
+const projects = [
+  { title: 'Projeto de exemplo A', meta: 'Local e ano de exemplo', ratio: '3 / 2', tone: 2 },
+  { title: 'Projeto de exemplo B', meta: 'Local e ano de exemplo', ratio: '3 / 2', tone: 4 },
+  { title: 'Projeto de exemplo C', meta: 'Local e ano de exemplo', ratio: '3 / 2', tone: 1 },
 ];
 ---
 <BaseLayout>
-  <section class="wrap hero">
-    <h1>{SITE.name}</h1>
-    <p class="lead">{SITE.tagline || 'Frase de posicionamento de exemplo, editável no painel.'}</p>
-    <Placeholder ratio="16 / 9" label="Fotografia de destaque de exemplo" />
+  <section class="hero">
+    <Placeholder fill tone={0} label="Fotografia de destaque de exemplo" />
+    <div class="wrap hero-text">
+      <h1>{SITE.name}</h1>
+      <p>{SITE.tagline || 'Frase de posicionamento de exemplo, editável no painel.'}</p>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="areas">
+    <h2 id="areas">Áreas de atuação</h2>
+    <ul class="areas">{AREAS.map((a) => <li>{a}</li>)}</ul>
+  </section>
+
+  <section class="wrap section" aria-labelledby="selecao">
+    <h2 id="selecao">Seleção</h2>
+    <div class="mosaic">
+      {mosaic.map((m) => <div class={`m-${m.span}`}><Placeholder ratio={m.ratio} tone={m.tone} /></div>)}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="sequencia">
+    <div class="wrap"><h2 id="sequencia">Sequência</h2></div>
+    <ul class="strip" tabindex="0" aria-label="Sequência de fotografias de exemplo, role para o lado">
+      {strip.map((r, i) => <li style={`--r:${r}`}><Placeholder ratio={r} tone={i} /></li>)}
+    </ul>
   </section>
 
   <section class="wrap section" aria-labelledby="projetos">
-    <h2 id="projetos">Projetos selecionados</h2>
-    <div class="grid-cards">
-      {examples.map((p) => <a class="card" href="/projetos"><ProjectCard {...p} /></a>)}
-    </div>
-    <p><a href="/projetos">Ver todos os projetos</a></p>
+    <h2 id="projetos">Projetos em destaque</h2>
+    {projects.map((p, i) => (
+      <a class={`feature ${i % 2 ? 'flip' : ''}`} href="/projetos">
+        <Placeholder ratio={p.ratio} tone={p.tone} caption="Ver projeto" label={`Capa de exemplo: ${p.title}`} />
+        <div>
+          <h3>{p.title}</h3>
+          <p class="meta">{p.meta}</p>
+          <p class="muted">Resumo de exemplo do ensaio, que será substituído pelo texto real.</p>
+          <span class="link-u">Ver projeto</span>
+        </div>
+      </a>
+    ))}
   </section>
 
-  <section class="wrap section split">
+  <section class="wrap section" aria-labelledby="fine">
+    <h2 id="fine">Fotografias Fine Art</h2>
+    <p class="muted">Obras autorais selecionadas, disponíveis para aquisição sob consulta.</p>
+    <div class="fine-grid">
+      {[1, 2, 3, 4].map((n) => <a class="plain" href="/fotografias"><Placeholder ratio="4 / 5" tone={n} caption="Consultar valores" /></a>)}
+    </div>
+    <p><a class="link-u" href="/fotografias">Ver todas as fotografias</a></p>
+  </section>
+
+  <section class="wrap section about" aria-labelledby="sobre">
+    <Placeholder ratio="4 / 5" tone={2} label="Retrato de exemplo" />
     <div>
-      <h2>Fotografias Fine Art</h2>
-      <p class="muted">Obras autorais selecionadas, disponíveis para aquisição sob consulta.</p>
-      <a class="button" href="/fotografias">Ver fotografias</a>
-    </div>
-    <div>
-      <h2>Trabalhos profissionais</h2>
-      <p class="muted">Fotografia corporativa, institucional, de alimentos e projetos sob encomenda.</p>
-      <a class="button" href="/trabalhos">Conhecer os serviços</a>
+      <h2 id="sobre">Sobre o fotógrafo</h2>
+      <p class="muted">{ABOUT.intro || 'Texto de apresentação de exemplo. A biografia real será escrita por Victor Hugo Camará no painel.'}</p>
+      <p><a class="link-u" href="/sobre">Conhecer o trabalho</a></p>
     </div>
   </section>
 
-  <section class="wrap section" aria-labelledby="sobre">
-    <h2 id="sobre">Sobre o fotógrafo</h2>
-    <p class="muted">Texto de apresentação de exemplo. A biografia real será escrita no painel.</p>
-    <p><a href="/sobre">Ler mais</a></p>
+  <section class="wrap section pro" aria-labelledby="pro">
+    <h2 id="pro">Trabalhos profissionais</h2>
+    <p class="muted">Fotografia corporativa, institucional, de alimentos e projetos sob encomenda.</p>
+    <a class="button" href="/trabalhos">Conhecer os serviços</a>
   </section>
 
-  <section class="wrap section" aria-labelledby="contato">
-    <h2 id="contato">Exposições, parcerias e aquisição de obras</h2>
-    <a class="button" href="/contato">Entrar em contato</a>
+  <section class="dark cta" aria-labelledby="contato">
+    <div class="wrap">
+      <h2 id="contato">Exposições, parcerias e aquisição de obras</h2>
+      <a class="button" href="/contato">Entrar em contato</a>
+    </div>
   </section>
 </BaseLayout>
 <style>
-  .hero { padding-block: var(--space-3) var(--space-5); }
-  .hero h1 { font-size: var(--text-display); line-height: 1; margin-bottom: var(--space-2); }
-  .lead { font-family: var(--font-serif); font-size: var(--text-lg); margin-bottom: var(--space-4); }
-  .card { text-decoration: none; }
-  .split { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+  .hero { position: relative; min-height: min(86svh, 54rem); display: grid; align-items: end; color: #fff; }
+  .hero-text { position: relative; padding-block: var(--space-5) var(--space-4); animation: rise 1.2s 0.15s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .hero h1 { font-size: var(--text-display); line-height: 1; margin-bottom: var(--space-1); }
+  .hero p { font-family: var(--font-serif); font-size: var(--text-lg); margin: 0; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+  .areas { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .areas li { padding: var(--space-2) var(--space-2) var(--space-2) 0; border-top: 1px solid var(--color-line); font-family: var(--font-serif); font-size: var(--text-lg); }
+  .mosaic { display: grid; gap: var(--space-2); grid-template-columns: repeat(12, 1fr); align-items: start; }
+  .m-a { grid-column: span 7; } .m-b { grid-column: span 5; } .m-c { grid-column: span 4; }
+  @media (max-width: 40rem) { .m-a, .m-b, .m-c { grid-column: span 12; } }
+  .strip { display: flex; gap: var(--space-2); list-style: none; margin: 0; padding: 0 var(--gutter) var(--space-2); overflow-x: auto; scroll-snap-type: x proximity; }
+  .strip li { flex: none; height: clamp(14rem, 34vw, 26rem); aspect-ratio: var(--r); scroll-snap-align: start; }
+  .strip li :global(.photo) { height: 100%; }
+  .feature { display: grid; gap: var(--space-3); grid-template-columns: 1.4fr 1fr; align-items: center; text-decoration: none; margin-top: var(--space-4); }
+  .feature.flip { grid-template-columns: 1fr 1.4fr; }
+  .feature.flip > :global(.photo) { order: 2; }
+  .feature h3 { font-size: var(--text-xl); }
+  .meta { font-size: var(--text-sm); color: var(--color-muted); }
+  @media (max-width: 48rem) { .feature, .feature.flip { grid-template-columns: 1fr; } .feature.flip > :global(.photo) { order: 0; } }
+  .plain { text-decoration: none; }
+  .fine-grid { display: grid; gap: var(--space-2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); margin-bottom: var(--space-3); }
+  .about { display: grid; gap: var(--space-4); grid-template-columns: minmax(12rem, 22rem) 1fr; align-items: center; }
+  @media (max-width: 40rem) { .about { grid-template-columns: 1fr; } }
+  .cta { padding-block: var(--space-5); margin-top: var(--space-5); }
+  .cta h2 { font-size: var(--text-xl); max-width: 22ch; }
 </style>

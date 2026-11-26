@@ -1,10 +1,26 @@
 ---
-// Marcador de imagem da Fase 2. Será substituído pelo componente de imagem do Sanity.
-interface Props { ratio?: string; label?: string }
-const { ratio = '3 / 2', label = 'Fotografia de exemplo' } = Astro.props;
+// Marcador de fotografia (Fase 2). Na Fase 3 será trocado pelo componente de imagem do Sanity.
+interface Props { ratio?: string; label?: string; tone?: number; caption?: string; fill?: boolean }
+const { ratio = '3 / 2', label = 'Fotografia de exemplo', tone = 0, caption, fill = false } = Astro.props;
+const l = [14, 20, 27, 34, 40, 46][tone % 6];
+const style = `--l:${l}%;${fill ? '' : `aspect-ratio:${ratio}`}`;
 ---
-<figure style={`aspect-ratio:${ratio}`} role="img" aria-label={label}><span>EXEMPLO</span></figure>
+<figure class:list={['photo', { fill, reveal: !fill }]} style={style}>
+  <div class="img" role="img" aria-label={label}></div>
+  <span class="tag">EXEMPLO</span>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
 <style>
-  figure { margin: 0; width: 100%; background: var(--color-placeholder); display: grid; place-items: end start; padding: var(--space-2); }
-  span { font-size: var(--text-sm); color: var(--color-muted); }
+  .photo { margin: 0; position: relative; overflow: hidden; width: 100%; background: hsl(0 0% var(--l)); }
+  .fill { position: absolute; inset: 0; height: 100%; }
+  .img { position: absolute; inset: 0; background: radial-gradient(120% 90% at 30% 20%, hsl(0 0% calc(var(--l) + 9%)), hsl(0 0% var(--l)) 70%); transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .tag { position: absolute; left: var(--space-2); top: var(--space-2); font-size: var(--text-sm); color: rgba(255, 255, 255, 0.78); }
+  figcaption { position: absolute; inset: auto 0 0 0; padding: var(--space-4) var(--space-2) var(--space-2); color: #fff; font-size: var(--text-sm); background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); transition: transform 0.5s ease, opacity 0.5s ease; }
+  @media (hover: hover) {
+    figcaption { transform: translateY(100%); opacity: 0; }
+    :global(a:hover) figcaption, :global(a:focus-visible) figcaption, .photo:hover figcaption { transform: none; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(a:hover) .img, :global(a:focus-visible) .img, .photo:hover .img { transform: scale(1.045); }
+  }
 </style>

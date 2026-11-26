@@ -1,10 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { AREAS, ABOUT } from '../config/site';
 ---
 <BaseLayout title="Sobre" description="Visão fotográfica, interesses e trajetória de Victor Hugo Camará.">
   <PageIntro title="Sobre" />
-  <div class="wrap">
-    <p class="muted">Conteúdo de exemplo. A visão fotográfica, a abordagem de trabalho e a trajetória serão escritas por Victor Hugo Camará no painel.</p>
+  <div class="wrap layout">
+    <Placeholder ratio="4 / 5" tone={2} label="Retrato de exemplo" />
+    <div>
+      <p class="lead">{ABOUT.intro || 'Texto de apresentação de exemplo. A visão fotográfica, a abordagem de trabalho e a trajetória serão escritas por Victor Hugo Camará no painel.'}</p>
+      <h2>Áreas de interesse</h2>
+      <ul>{AREAS.map((a) => <li>{a}</li>)}</ul>
+      <h2>Informações</h2>
+      {ABOUT.facts.length > 0 ? (
+        <dl>{ABOUT.facts.map((f) => <><dt>{f.label}</dt><dd>{f.value}</dd></>)}</dl>
+      ) : (
+        <p class="muted">Base, formação, publicações e exposições serão cadastradas no painel, somente com dados confirmados.</p>
+      )}
+    </div>
   </div>
 </BaseLayout>
+<style>
+  .layout { display: grid; gap: var(--space-4); grid-template-columns: minmax(12rem, 24rem) 1fr; align-items: start; }
+  @media (max-width: 48rem) { .layout { grid-template-columns: 1fr; } }
+  .lead { font-family: var(--font-serif); font-size: var(--text-lg); margin-bottom: var(--space-4); }
+  h2 { margin-top: var(--space-4); }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { padding-block: var(--space-1); border-top: 1px solid var(--color-line); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-1) var(--space-3); margin: 0; }
+  dt { color: var(--color-muted); } dd { margin: 0; }
+</style>

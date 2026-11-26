@@ -2,18 +2,18 @@
 import { SITE, NAV } from '../config/site';
 import { hasEmail, hasWhatsapp, mailtoLink, whatsappLink } from '../lib/contact';
 ---
-<footer>
+<footer class="dark">
   <div class="wrap grid">
     <div>
       <p class="name">{SITE.name}</p>
       <p class="muted">{SITE.description}</p>
     </div>
     <nav aria-label="Rodapé">
-      <ul>{NAV.map((i) => <li><a href={i.href}>{i.label}</a></li>)}</ul>
+      <ul>{NAV.map((i) => <li><a class="link-u" href={i.href}>{i.label}</a></li>)}</ul>
     </nav>
     <div>
-      {hasEmail() && <p>E-mail: <a href={mailtoLink('Contato pelo site')}>{SITE.contactEmail}</a></p>}
-      {hasWhatsapp() && <p><a href={whatsappLink('Olá, Victor! Vim pelo seu site.')}>Conversar pelo WhatsApp</a></p>}
+      {hasEmail() && <p>E-mail: <a class="link-u" href={mailtoLink('Contato pelo site')}>{SITE.contactEmail}</a></p>}
+      {hasWhatsapp() && <p><a class="link-u" href={whatsappLink('Olá, Victor! Vim pelo seu site.')}>Conversar pelo WhatsApp</a></p>}
       {!hasEmail() && !hasWhatsapp() && <p class="muted">Os contatos serão exibidos aqui.</p>}
     </div>
   </div>
@@ -22,10 +22,11 @@ import { hasEmail, hasWhatsapp, mailtoLink, whatsappLink } from '../lib/contact'
   </div>
 </footer>
 <style>
-  footer { border-top: 1px solid var(--color-line); margin-top: var(--space-5); padding-top: var(--space-4); font-size: var(--text-sm); }
+  footer { margin-top: var(--space-5); padding-top: var(--space-4); font-size: var(--text-sm); }
   .grid { display: grid; gap: var(--space-3) var(--space-4); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
   .name { font-family: var(--font-serif); font-size: var(--text-lg); margin-bottom: 0.25rem; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
   p { margin-bottom: 0.5rem; }
-  .legal { padding-block: var(--space-3); }
+  :global(main:has(.cta) + footer) { margin-top: 0; }
+  .legal { padding-block: var(--space-4) var(--space-3); }
 </style>

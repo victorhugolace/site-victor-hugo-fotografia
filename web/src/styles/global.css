@@ -35,3 +35,17 @@ a:hover { text-decoration-thickness: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Revelação ao rolar (só quando o JS está ativo) */
+html.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Sublinhado animado para links */
+.link-u { text-decoration: none; padding-bottom: 2px; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.35s ease; }
+.link-u:hover, .link-u:focus-visible { background-size: 100% 1px; }
+
+.dark { background: var(--color-dark); color: var(--color-on-dark); }
+.dark .muted { color: #a8a7a2; }
+.dark .button { border-color: var(--color-on-dark); }
+.dark .button:hover { background: var(--color-on-dark); color: var(--color-dark); }
+body.menu-open { overflow: hidden; }

@@ -14,3 +14,17 @@ export const NAV = [
   { label: 'Sobre', href: '/sobre' },
   { label: 'Contato', href: '/contato' },
 ];
+
+// Áreas de interesse (extraídas do briefing). Editáveis no painel na Fase 3.
+export const AREAS = [
+  'Fotojornalismo, política e história',
+  'Pessoas, cotidiano e cultura',
+  'Territórios e comunidades',
+  'Ensaios autorais em preto e branco',
+];
+
+// Dados pessoais: NÃO preencher com informação não confirmada.
+export const ABOUT = {
+  intro: '', // texto de apresentação real
+  facts: [] as { label: string; value: string }[], // ex.: { label: 'Base', value: '...' }
+};
