@@ -35,12 +35,61 @@ const projects = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="sequencia">
-    <div class="wrap"><h2 id="sequencia">Sequência</h2></div>
-    <ul class="strip" tabindex="0" aria-label="Sequência de fotografias de exemplo, role para o lado">
-      {strip.map((r, i) => <li style={`--r:${r}`}><Placeholder ratio={r} tone={i} /></li>)}
-    </ul>
+  <section class="section strip-section" aria-labelledby="sequencia">
+    <div class="wrap strip-header">
+      <h2 id="sequencia">Sequência</h2>
+      <div class="strip-header-controls">
+        <button type="button" class="strip-arrow strip-arrow-header" id="strip-btn-prev" aria-label="Fotografia anterior">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" class="strip-arrow strip-arrow-header" id="strip-btn-next" aria-label="Próxima fotografia">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="strip-container">
+      <button type="button" class="strip-arrow strip-arrow-lateral prev" id="strip-lat-prev" aria-label="Rolar para a esquerda">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <ul class="strip" id="photo-strip" tabindex="0" aria-label="Sequência de fotografias de exemplo">
+        {strip.map((r, i) => <li style={`--r:${r}`}><Placeholder ratio={r} tone={i} /></li>)}
+      </ul>
+
+      <button type="button" class="strip-arrow strip-arrow-lateral next" id="strip-lat-next" aria-label="Rolar para a direita">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
   </section>
+
+  <script>
+    function setupStrip() {
+      const strip = document.getElementById('photo-strip');
+      if (!strip) return;
+
+      const getScrollAmount = () => Math.max(340, strip.clientWidth * 0.7);
+
+      const scrollLeft = () => strip.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      const scrollRight = () => strip.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+
+      document.getElementById('strip-lat-prev')?.addEventListener('click', scrollLeft);
+      document.getElementById('strip-lat-next')?.addEventListener('click', scrollRight);
+      document.getElementById('strip-btn-prev')?.addEventListener('click', scrollLeft);
+      document.getElementById('strip-btn-next')?.addEventListener('click', scrollRight);
+    }
+
+    setupStrip();
+    document.addEventListener('astro:page-load', setupStrip);
+  </script>
 
   <section class="wrap section" aria-labelledby="projetos">
     <h2 id="projetos">Projetos em destaque</h2>
@@ -110,9 +159,99 @@ const projects = [
   .mosaic { display: grid; gap: var(--space-2); grid-template-columns: repeat(12, 1fr); align-items: start; }
   .m-a { grid-column: span 7; } .m-b { grid-column: span 5; } .m-c { grid-column: span 4; }
   @media (max-width: 40rem) { .m-a, .m-b, .m-c { grid-column: span 12; } }
-  .strip { display: flex; gap: var(--space-2); list-style: none; margin: 0; padding: 0 var(--gutter) var(--space-2); overflow-x: auto; scroll-snap-type: x proximity; }
-  .strip li { flex: none; height: clamp(14rem, 34vw, 26rem); aspect-ratio: var(--r); scroll-snap-align: start; }
-  .strip li :global(.photo) { height: 100%; }
+  .mosaic > div {
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    border-radius: 2px;
+  }
+  .mosaic > div:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 42px -10px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+  }
+
+  .strip-section { position: relative; padding-block: var(--space-4); }
+  .strip-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1); }
+  .strip-header h2 { margin: 0; }
+  .strip-header-controls { display: flex; gap: 0.5rem; }
+  .strip-container { position: relative; width: 100%; }
+
+  .strip {
+    display: flex;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-3) var(--gutter);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .strip::-webkit-scrollbar { display: none; }
+
+  .strip li {
+    flex: none;
+    height: clamp(14rem, 34vw, 26rem);
+    aspect-ratio: var(--r);
+    scroll-snap-align: start;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    border-radius: 2px;
+  }
+  .strip li:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 46px -10px rgba(0, 0, 0, 0.42), 0 2px 10px rgba(0, 0, 0, 0.14);
+    z-index: 10;
+  }
+  .strip li :global(.photo) { height: 100%; border-radius: 2px; }
+
+  .strip-arrow {
+    background: rgba(247, 246, 243, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-line);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .strip-arrow:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  }
+  .strip-arrow-header {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .strip-arrow-lateral {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 3.25rem;
+    height: 3.25rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  }
+  .strip-arrow-lateral.prev {
+    left: clamp(0.75rem, 2.5vw, 2rem);
+  }
+  .strip-arrow-lateral.next {
+    right: clamp(0.75rem, 2.5vw, 2rem);
+  }
+  .strip-arrow-lateral:hover {
+    transform: translateY(-50%) scale(1.08);
+  }
+  @media (max-width: 48rem) {
+    .strip-arrow-lateral { display: none; }
+  }
   .feature { display: grid; gap: var(--space-3); grid-template-columns: 1.4fr 1fr; align-items: center; text-decoration: none; margin-top: var(--space-4); }
   .feature.flip { grid-template-columns: 1fr 1.4fr; }
   .feature.flip > :global(.photo) { order: 2; }
