@@ -75,10 +75,21 @@ const projects = [
     </div>
   </section>
 
-  <section class="wrap section pro" aria-labelledby="pro">
-    <h2 id="pro">Trabalhos profissionais</h2>
-    <p class="muted">Fotografia corporativa, institucional, de alimentos e projetos sob encomenda.</p>
-    <a class="button" href="/trabalhos">Conhecer os serviços</a>
+  <section class="wrap section fine-art-feature" aria-labelledby="padrao-fine">
+    <div class="fine-card">
+      <span class="sub-label">Guia Técnico & Conservação</span>
+      <h2 id="padrao-fine">O Padrão Fine Art de Impressão</h2>
+      <p class="muted">
+        Conheça os suportes 100% fibra de algodão Hahnemühle e Canson, as molduras em madeiras maciças nobres, os vidros com 99% de bloqueio UV e a certificação com selo holográfico numerado.
+      </p>
+      <div class="features-summary">
+        <span class="feat-tag">Papéis 100% Algodão</span>
+        <span class="feat-tag">Madeiras Nobres</span>
+        <span class="feat-tag">Vidro Museu UV 99%</span>
+        <span class="feat-tag">Certificado Holográfico</span>
+      </div>
+      <a class="button" href="/fine-art">Conhecer especificações Fine Art</a>
+    </div>
   </section>
 
   <section class="dark cta" aria-labelledby="contato">
@@ -114,4 +125,8 @@ const projects = [
   @media (max-width: 40rem) { .about { grid-template-columns: 1fr; } }
   .cta { padding-block: var(--space-5); margin-top: var(--space-5); }
   .cta h2 { font-size: var(--text-xl); max-width: 22ch; }
+  .fine-card { background: #ffffff; border: 1px solid var(--color-line); padding: clamp(1.75rem, 3.5vw, 3rem); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); }
+  .sub-label { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #8c734b; margin-bottom: 0.5rem; }
+  .features-summary { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0 1.5rem; }
+  .feat-tag { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; background: var(--color-bg); border: 1px solid var(--color-line); padding: 0.35rem 0.75rem; color: var(--color-text); }
 </style>

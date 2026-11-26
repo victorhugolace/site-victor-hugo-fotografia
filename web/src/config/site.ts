@@ -10,7 +10,7 @@ export const SITE = {
 export const NAV = [
   { label: 'Projetos', href: '/projetos' },
   { label: 'Fotografias', href: '/fotografias' },
-  { label: 'Trabalhos', href: '/trabalhos' },
+  { label: 'Fine Art', href: '/fine-art' },
   { label: 'Sobre', href: '/sobre' },
   { label: 'Contato', href: '/contato' },
 ];

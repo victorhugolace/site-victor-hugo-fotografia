@@ -1,22 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
-import Placeholder from '../components/Placeholder.astro';
-const services = ['Fotografia corporativa', 'Fotografia institucional', 'Fotografia de alimentos', 'Projetos editoriais', 'Trabalhos sob encomenda'];
+return Astro.redirect('/fine-art', 301);
 ---
-<BaseLayout title="Trabalhos profissionais" description="Serviços de fotografia comercial e institucional de Victor Hugo Camará.">
-  <PageIntro title="Trabalhos profissionais" lead="Serviços de fotografia sob contratação, separados dos projetos autorais. Descrições e imagens serão adicionadas no painel." />
-  <div class="wrap">
-    <ul>{services.map((s) => <li><a href="/contato"><span class="name">{s}</span><span class="link-u">Solicitar orçamento</span></a></li>)}</ul>
-    <div class="photos">{[3 / 2, 3 / 2, 3 / 2].map((_, i) => <Placeholder ratio="3 / 2" tone={i + 1} />)}</div>
-  </div>
-</BaseLayout>
-<style>
-  ul { padding: 0; list-style: none; margin: 0 0 var(--space-4); }
-  li { border-top: 1px solid var(--color-line); }
-  li:last-child { border-bottom: 1px solid var(--color-line); }
-  li a { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-1); padding-block: var(--space-3); text-decoration: none; transition: padding-left 0.4s ease; font-size: var(--text-sm); }
-  li a:hover, li a:focus-visible { padding-left: var(--space-2); }
-  .name { font-family: var(--font-serif); font-size: var(--text-lg); }
-  .photos { display: grid; gap: var(--space-2); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-</style>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;url=/fine-art" />
+    <link rel="canonical" href="/fine-art" />
+    <title>Redirecionando para Fine Art...</title>
+  </head>
+  <body>
+    <p>Redirecionando para <a href="/fine-art">O Padrão Fine Art</a>...</p>
+  </body>
+</html>

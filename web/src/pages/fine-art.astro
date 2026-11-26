@@ -1,0 +1,735 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { whatsappLink, mailtoLink } from '../lib/contact';
+
+const papers = [
+  {
+    name: 'Hahnemühle Photo Rag® 308g',
+    composition: '100% Fibra de Algodão • Branco Natural',
+    surface: 'Fosco suave com textura sutil e toque aveludado',
+    bestFor: 'Ensaios documentais, arquitetura e retratos com ampla gradação de cinzas e cores densas.',
+    highlights: 'O papel mais prestigiado em galerias e museus de todo o mundo. Pretos profundos (D-Max superior), excelente nitidez de detalhe e ausência de alvejantes ópticos.',
+    durability: 'Permanência museológica > 100 anos',
+  },
+  {
+    name: 'Hahnemühle Museum Etching 350g',
+    composition: '100% Fibra de Algodão • Branco Natural Quente',
+    surface: 'Textura nobre marcante com toque de gravura artesanal em metal',
+    bestFor: 'Composições com ricas variações tonais, paisagens de território, caatinga e casarios coloniais.',
+    highlights: 'Alta gramatura que confere volume e imponência à obra. Proporciona tridimensionalidade tátil única às fotografias.',
+    durability: 'Permanência museológica > 100 anos',
+  },
+  {
+    name: 'Canson® Infinity Rag Photographique 310g',
+    composition: '100% Fibra de Algodão • Branco Puro sem OBA',
+    surface: 'Superfície ultra-suave com acabamento acetinado fosco',
+    bestFor: 'Retratos intimistas, arquitetura moderna e gradações luminosas contínuas.',
+    highlights: 'Desenvolvido especificamente para atender aos critérios de conservação mais rigorosos. Textura extremamente delicada e fidelidade máxima de tons.',
+    durability: 'Permanência museológica > 100 anos',
+  },
+  {
+    name: 'Hahnemühle Photo Rag® Baryta 315g',
+    composition: '100% Algodão com Camada de Sulfato de Bário',
+    surface: 'Brilho acetinado de laboratório analógico tradicional',
+    bestFor: 'Fotografia preto e branco clássica com contraste expressivo e pretos azeviche.',
+    highlights: 'Evoca a aura das impressões em gelatina e prata da era de ouro do fotojornalismo (estilo Magnum Photos), mantendo a estabilidade digital moderna.',
+    durability: 'Permanência museológica > 100 anos',
+  },
+  {
+    name: 'Hahnemühle Bamboo 290g',
+    composition: '90% Fibras de Bambu + 10% Algodão',
+    surface: 'Fosco caloroso com textura orgânica refinada',
+    bestFor: 'Paisagens naturais, expedições e registros botânicos e costeiros.',
+    highlights: 'Papel sustentável pioneiro de fibras naturais de crescimento rápido. Confere uma tonalidade quente e sensorial inconfundível à cena.',
+    durability: 'Permanência museológica > 100 anos',
+  },
+];
+
+const frames = [
+  {
+    title: 'Moldura Caixa (Shadow Box)',
+    desc: 'Perfil profundo que afasta o vidro da superfície da fotografia em 1,5 cm a 2,5 cm. Cria uma câmara de ar protetora que impede o contato do papel com o vidro e confere sensação tridimensional elegante.',
+    tag: 'Recomendação Curatorial',
+  },
+  {
+    title: 'Madeiras Maciças Nobres',
+    desc: 'Trabalhadas artesanalmente em Freijó Natural encerado, Imbuia, Carvalho Americano, ou acabamento em Laca Fosca (Preta ou Branca). Todas as madeiras recebem tratamento contra cupins e fungos.',
+    tag: 'Material Nobre',
+  },
+  {
+    title: 'Paspatur (Matte Board) 100% Algodão',
+    desc: 'Cartão museológico de conservação com pH rigorosamente neutro, livre de lignina e ácidos, cortado em bisel de 45º. Cria margem de respiro harmônica ao redor da imagem e previne qualquer amarelamento com o tempo.',
+    tag: 'Conservação Museológica',
+  },
+  {
+    title: 'Montagem Flutuante (Floating Mount)',
+    desc: 'A fotografia é montada suspensa no centro da caixa com as bordas do papel aparentes (inclusive com borda desfiada ou rasgada à mão), destacando a textura física e a autenticidade do papel de algodão.',
+    tag: 'Efeito Contemporâneo',
+  },
+  {
+    title: 'Fechamento Hermético Traseiro',
+    desc: 'A parte posterior da moldura é lacrada com fita de conservação especial e chapa de barreira anti-umidade, blindando a fotografia contra micropartículas de poeira e variações bruscas de umidade relativa.',
+    tag: 'Proteção Total',
+  },
+];
+
+const glasses = [
+  {
+    title: 'Vidro Museu Antirreflexo (Artglass / Tru Vue)',
+    blockUV: '99% de Bloqueio UV',
+    reflection: '< 0,5% de Reflexão Residual',
+    desc: 'O mais avançado tratamento óptico para galerias e museus de arte. Elimina reflexos incômodos com clareza cristalina absoluta — ao olhar para a obra, tem-se a impressão nítida de que não existe vidro.',
+    recommended: 'Obras em locais com incidência de luz lateral ou janelas.',
+  },
+  {
+    title: 'Acrílico Óptico Cast de Conservação (Plexiglass UV)',
+    blockUV: '99% de Bloqueio UV',
+    reflection: 'Alta Transparência',
+    desc: 'Indicado para formatos médios e grandes (acima de 100 cm). Não estilhaça, possui metade do peso do vidro convencional e oferece proteção UV completa para transporte interestadual seguro.',
+    recommended: 'Formatos acima de 90x120 cm e residências com crianças.',
+  },
+  {
+    title: 'Vidro Float Cristal Incolor',
+    blockUV: 'Proteção UV Padrão',
+    reflection: 'Reflexão Natural',
+    desc: 'Vidro plano clássico de alta pureza e transparência. Excelente custo-benefício para salas e galerias com projeto de iluminação indireta totalmente controlado.',
+    recommended: 'Ambientes corporativos e galerias com luz difusa.',
+  },
+];
+---
+
+<BaseLayout
+  title="O Padrão Fine Art | Victor Hugo Camará"
+  description="Guia detalhado sobre o padrão de impressão Fine Art: papéis 100% algodão Hahnemühle e Canson, molduras em madeiras nobres, vidros museu com 99% de bloqueio UV e certificação de autenticidade."
+>
+  <PageIntro
+    title="O Padrão Fine Art"
+    lead="Cada fotografia do acervo Victor Hugo Camará é produzida como uma obra de arte física singular, segundo os critérios internacionais mais exigentes de permanência e conservação museológica."
+  />
+
+  <div class="wrap fine-art-page">
+    <!-- Índice Rápido / Abas de Navegação Interna -->
+    <nav class="fine-art-subnav" aria-label="Seções do Guia Fine Art">
+      <ul class="subnav-list">
+        <li><a href="#papeis" class="subnav-link">1. Papéis de Algodão</a></li>
+        <li><a href="#molduras" class="subnav-link">2. Molduras & Paspatur</a></li>
+        <li><a href="#vidros" class="subnav-link">3. Vidros & Proteção UV</a></li>
+        <li><a href="#certificacao" class="subnav-link">4. Certificação & Tiragem</a></li>
+        <li><a href="#cuidados" class="subnav-link">5. Guia de Conservação</a></li>
+        <li><a href="#consultoria" class="subnav-link">6. Projetos & Consultoria</a></li>
+      </ul>
+    </nav>
+
+    <!-- 1. PAPÉIS DE ALGODÃO -->
+    <section id="papeis" class="fine-section" aria-labelledby="heading-papeis">
+      <div class="section-badge">Suporte & Matéria</div>
+      <h2 id="heading-papeis" class="section-heading">Papéis 100% Fibra de Algodão (Cotton Rag)</h2>
+      <p class="section-lead-text muted">
+        Diferente dos papéis fotográficos comuns de celulose de madeira, os papéis Fine Art são confeccionados a partir de fibras nobres de algodão ou fibras vegetais naturais puras. São totalmente livres de ácido (acid-free) e possuem reserva alcalina, o que impede o amarelamento e a degradação das fibras ao longo das décadas.
+      </p>
+
+      <div class="papers-grid">
+        {papers.map((paper) => (
+          <article class="paper-card">
+            <div class="paper-header">
+              <span class="paper-durability">{paper.durability}</span>
+              <h3 class="paper-name">{paper.name}</h3>
+              <p class="paper-comp">{paper.composition}</p>
+            </div>
+            <div class="paper-body">
+              <div class="paper-info-row">
+                <strong>Superfície:</strong>
+                <span>{paper.surface}</span>
+              </div>
+              <div class="paper-info-row">
+                <strong>Aplicação ideal:</strong>
+                <span>{paper.bestFor}</span>
+              </div>
+              <p class="paper-highlights muted">{paper.highlights}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- 2. MOLDURAS & ACABAMENTOS -->
+    <section id="molduras" class="fine-section" aria-labelledby="heading-molduras">
+      <div class="section-badge">Marcenaria Fina</div>
+      <h2 id="heading-molduras" class="section-heading">Molduras em Madeira Maciça & Paspatur</h2>
+      <p class="section-lead-text muted">
+        O enquadramento Fine Art protege a obra contra agentes ambientais e estabelece o diálogo estético com o espaço arquitetônico. Trabalhamos com marcenaria artesanal especializada em conservação de obras de arte.
+      </p>
+
+      <div class="frames-grid">
+        {frames.map((frame) => (
+          <div class="frame-card">
+            <span class="frame-tag">{frame.tag}</span>
+            <h3 class="frame-title">{frame.title}</h3>
+            <p class="frame-desc muted">{frame.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Detalhe da Montagem -->
+      <div class="mounting-anatomy">
+        <h4 class="anatomy-title">Anatomia de uma Obra Enquadrada no Padrão Museu:</h4>
+        <ol class="anatomy-steps">
+          <li><strong>Vidro Museu / Acrílico Óptico:</strong> Primeira barreira física com filtro de radiação solar UV 99%.</li>
+          <li><strong>Perfil Afastador:</strong> Cria espaço de respiro de 1,5 a 2 cm entre o papel e o vidro.</li>
+          <li><strong>Paspatur 100% Algodão:</strong> Cartão neutro com corte em bisel de 45º sem emissão de gases ácidos.</li>
+          <li><strong>Impressão em Papel Hahnemühle:</strong> Fixada por cantoneiras de conservação reversíveis (sem fitas adesivas destrutivas).</li>
+          <li><strong>Fundo de Barreira Anti-Umidade:</strong> Placa selada hermeticamente contra intempéries.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 3. VIDROS ESPECIAIS & PROTEÇÃO UV -->
+    <section id="vidros" class="fine-section" aria-labelledby="heading-vidros">
+      <div class="section-badge">Proteção Óptica</div>
+      <h2 id="heading-vidros" class="section-heading">Vidros Especiais & Bloqueio Ultravioleta</h2>
+      <p class="section-lead-text muted">
+        A luz natural e as lâmpadas que emitem radiação UV são as principais responsáveis pelo esmaecimento de obras ao longo dos anos. A escolha correta do vidro preserva a vivacidade da fotografia e elimina reflexos de janelas e luminárias.
+      </p>
+
+      <div class="glasses-grid">
+        {glasses.map((glass) => (
+          <div class="glass-card">
+            <div class="glass-tags">
+              <span class="badge-uv">{glass.blockUV}</span>
+              <span class="badge-refl">{glass.reflection}</span>
+            </div>
+            <h3 class="glass-title">{glass.title}</h3>
+            <p class="glass-desc muted">{glass.desc}</p>
+            <div class="glass-recom">
+              <strong>Indicado para:</strong> {glass.recommended}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. CERTIFICAÇÃO & TIRAGEM -->
+    <section id="certificacao" class="fine-section" aria-labelledby="heading-cert">
+      <div class="section-badge">Autenticidade & Proveniência</div>
+      <h2 id="heading-cert" class="section-heading">Tiragens Limitadas & Certificado Hahnemühle</h2>
+      <p class="section-lead-text muted">
+        Toda fotografia vendida no acervo autoral possui tiragem rigorosamente finita. Uma vez esgotada a edição, a obra nunca mais é impressa naquele formato, garantindo valorização contínua e exclusividade aos colecionadores.
+      </p>
+
+      <div class="cert-features-grid">
+        <div class="cert-item">
+          <span class="cert-num">01</span>
+          <h4>Chancela Seca em Relevo</h4>
+          <p class="muted">Aplicada diretamente na margem inferior do papel de algodão, comprovando a autenticidade da tiragem do ateliê.</p>
+        </div>
+        <div class="cert-item">
+          <span class="cert-num">02</span>
+          <h4>Selo Holográfico Duplo Inviolável</h4>
+          <p class="muted">Certificado Hahnemühle registrado com código serial único alfanumérico. Um holograma fica no certificado e o par idêntico no verso da obra.</p>
+        </div>
+        <div class="cert-item">
+          <span class="cert-num">03</span>
+          <h4>Assinatura a Punho & Numeração</h4>
+          <p class="muted">Victor Hugo Camará assina pessoalmente cada exemplar a lápis de grafite atóxico, indicando a tiragem (exemplo: 1/15) e o ano de registro.</p>
+        </div>
+        <div class="cert-item">
+          <span class="cert-num">04</span>
+          <h4>Registro em Livro de Tombo</h4>
+          <p class="muted">O comprador recebe documento formal com registro de proveniência para fins de seguro de arte, acervo patrimonial e inventário particular.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. GUIA DE CONSERVAÇÃO PREVENTIVA -->
+    <section id="cuidados" class="fine-section" aria-labelledby="heading-cuidados">
+      <div class="section-badge">Manutenção & Longevidade</div>
+      <h2 id="heading-cuidados" class="section-heading">Como Cuidar da Sua Fotografia Fine Art</h2>
+      <div class="care-grid">
+        <div class="care-box">
+          <h4>Iluminação Recomendada</h4>
+          <p class="muted">
+            Evite a incidência direta dos raios solares sobre a obra. Para iluminação de destaque, utilize lâmpadas LED de alta fidelidade cromática (IRC/CRI ≥ 90) com temperatura de cor entre 2700K e 3000K (luz morna), livres de emissão de radiação UV e infravermelha (calor).
+          </p>
+        </div>
+        <div class="care-box">
+          <h4>Ambiente, Temperatura & Umidade</h4>
+          <p class="muted">
+            Mantenha a obra em cômodos com umidade relativa do ar equilibrada (entre 40% e 60%) e temperatura estável. Evite instalar fotografias em paredes contíguas a áreas molhadas (banheiros, saunas) sem isolamento específico.
+          </p>
+        </div>
+        <div class="care-box">
+          <h4>Limpeza & Manuseio</h4>
+          <p class="muted">
+            Para obras sem vidro ou durante o manuseio pré-enquadramento, use luvas de algodão limpas para evitar oleosidade das mãos. Para limpar molduras com vidro ou acrílico, utilize apenas pano macio de microfibra levemente seco. Nunca borrife produtos químicos diretamente sobre a moldura.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PROJETOS & CONSULTORIA PARA ARQUITETURA -->
+    <section id="consultoria" class="fine-section consultoria-section" aria-labelledby="heading-consultoria">
+      <div class="consultoria-inner">
+        <span class="section-badge">Especificação para Espaços</span>
+        <h2 id="heading-consultoria" class="consultoria-title">Consultoria Personalizada de Obras</h2>
+        <p class="consultoria-lead muted">
+          Auxiliamos arquitetos, designers de interiores e colecionadores na seleção harmônica de obras, dimensões adequadas para cada vão de parede e simulação digital 3D da fotografia no ambiente real do projeto.
+        </p>
+
+        <div class="consultoria-actions">
+          <a
+            href={whatsappLink('Olá Victor! Gostaria de uma consultoria sobre opções de papéis, molduras e formatos para um projeto.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button"
+          >
+            <span>Conversar sobre Especificação via WhatsApp</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href={mailtoLink('Consulta Técnica sobre Obras e Enquadramento')} class="button">
+            <span>Solicitar Catálogo Técnico por E-mail</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .fine-art-page {
+    padding-bottom: var(--space-6);
+  }
+
+  /* Subnavegação de Abas Internas */
+  .fine-art-subnav {
+    position: sticky;
+    top: 3.5rem;
+    z-index: 40;
+    background: rgba(247, 246, 243, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-line);
+    margin-bottom: var(--space-5);
+    padding-block: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .fine-art-subnav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .subnav-list {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .subnav-link {
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    padding-block: 0.25rem;
+    transition: color 0.25s ease;
+  }
+
+  .subnav-link:hover {
+    color: var(--color-text);
+  }
+
+  /* Seções */
+  .fine-section {
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-line);
+    margin-bottom: var(--space-5);
+  }
+
+  .section-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #8c734b;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 300;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .section-lead-text {
+    max-width: 52rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Grid de Papéis */
+  .papers-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .papers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .papers-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .paper-card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .paper-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .paper-header {
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .paper-durability {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8c734b;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .paper-name {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    margin: 0 0 0.35rem;
+    line-height: 1.2;
+  }
+
+  .paper-comp {
+    font-size: 0.775rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .paper-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .paper-info-row strong {
+    display: block;
+    font-size: 0.725rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 0.15rem;
+  }
+
+  .paper-info-row span {
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
+  .paper-highlights {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin: 0.5rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--color-line);
+  }
+
+  /* Grid de Molduras */
+  .frames-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+    margin-bottom: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .frames-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .frames-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .frame-card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .frame-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #8c734b;
+  }
+
+  .frame-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .frame-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Anatomia da Moldura */
+  .mounting-anatomy {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 2rem;
+    margin-top: var(--space-3);
+  }
+
+  .anatomy-title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+    color: var(--color-text);
+  }
+
+  .anatomy-steps {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .anatomy-steps strong {
+    color: var(--color-text);
+  }
+
+  /* Grid de Vidros */
+  .glasses-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .glasses-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .glass-card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .glass-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .badge-uv, .badge-refl {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-line);
+    font-weight: 500;
+  }
+
+  .badge-uv {
+    background-color: var(--color-dark);
+    color: var(--color-on-dark);
+    border-color: var(--color-dark);
+  }
+
+  .glass-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 0.2rem 0 0;
+  }
+
+  .glass-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .glass-recom {
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px dashed var(--color-line);
+    font-size: 0.775rem;
+    color: var(--color-muted);
+  }
+
+  .glass-recom strong {
+    color: var(--color-text);
+  }
+
+  /* Grid de Certificação */
+  .cert-features-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .cert-features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cert-features-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .cert-item {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cert-num {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #8c734b;
+    font-weight: 300;
+  }
+
+  .cert-item h4 {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .cert-item p {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Guia de Cuidados */
+  .care-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .care-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .care-box {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+  }
+
+  .care-box h4 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0 0 0.75rem;
+  }
+
+  .care-box p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Banner de Consultoria */
+  .consultoria-section {
+    background-color: #ffffff;
+    border: 1px solid var(--color-line);
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+    text-align: center;
+  }
+
+  .consultoria-inner {
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .consultoria-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 300;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .consultoria-lead {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 var(--space-4);
+  }
+
+  .consultoria-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+</style>
