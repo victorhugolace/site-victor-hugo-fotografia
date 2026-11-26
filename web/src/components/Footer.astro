@@ -2,31 +2,126 @@
 import { SITE, NAV } from '../config/site';
 import { hasEmail, hasWhatsapp, mailtoLink, whatsappLink } from '../lib/contact';
 ---
-<footer class="dark">
-  <div class="wrap grid">
-    <div>
-      <p class="name">{SITE.name}</p>
-      <p class="muted">{SITE.description}</p>
+
+<footer class="site-footer dark">
+  <div class="wrap footer-row">
+    <div class="brand-group">
+      <span class="name">{SITE.name}</span>
+      <span class="desc muted">{SITE.description}</span>
     </div>
-    <nav aria-label="Rodapé">
-      <ul>{NAV.map((i) => <li><a class="link-u" href={i.href}>{i.label}</a></li>)}</ul>
+
+    <nav aria-label="Navegação do Rodapé">
+      <ul class="nav-links">
+        {NAV.map((i) => (
+          <li><a class="link-u" href={i.href}>{i.label}</a></li>
+        ))}
+      </ul>
     </nav>
-    <div>
-      {hasEmail() && <p>E-mail: <a class="link-u" href={mailtoLink('Contato pelo site')}>{SITE.contactEmail}</a></p>}
-      {hasWhatsapp() && <p><a class="link-u" href={whatsappLink('Olá, Victor! Vim pelo seu site.')}>Conversar pelo WhatsApp</a></p>}
-      {!hasEmail() && !hasWhatsapp() && <p class="muted">Os contatos serão exibidos aqui.</p>}
+
+    <div class="contact-group">
+      {hasEmail() && (
+        <a class="link-u contact-link" href={mailtoLink('Contato pelo site')}>
+          {SITE.contactEmail}
+        </a>
+      )}
+      {hasWhatsapp() && (
+        <a class="link-u contact-link" href={whatsappLink('Olá, Victor! Vim pelo seu site.')}>
+          WhatsApp
+        </a>
+      )}
+      {!hasEmail() && !hasWhatsapp() && <span class="muted">Recife & São Paulo</span>}
     </div>
   </div>
-  <div class="wrap legal muted">
+
+  <div class="wrap footer-subline muted">
     <p>© {new Date().getFullYear()} {SITE.name}. Todas as fotografias são protegidas por direitos autorais.</p>
+    <a href="#conteudo" class="link-u back-top">Voltar ao topo ↑</a>
   </div>
 </footer>
+
 <style>
-  footer { margin-top: var(--space-5); padding-top: var(--space-4); font-size: var(--text-sm); }
-  .grid { display: grid; gap: var(--space-3) var(--space-4); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
-  .name { font-family: var(--font-serif); font-size: var(--text-lg); margin-bottom: 0.25rem; }
-  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
-  p { margin-bottom: 0.5rem; }
-  :global(main:has(.cta) + footer) { margin-top: 0; }
-  .legal { padding-block: var(--space-4) var(--space-3); }
+  .site-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  :global(main:has(.cta) + .site-footer) {
+    margin-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding-bottom: var(--space-2);
+  }
+
+  .brand-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .name {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--color-on-dark);
+    font-weight: 400;
+  }
+
+  .desc {
+    font-size: 0.75rem;
+  }
+
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.25rem;
+    font-size: 0.775rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .contact-group {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-size: 0.775rem;
+  }
+
+  .contact-link {
+    text-decoration: none;
+  }
+
+  .footer-subline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding-block: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.7rem;
+  }
+
+  .footer-subline p {
+    margin: 0;
+  }
+
+  .back-top {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
 </style>
